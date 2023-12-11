@@ -80,6 +80,7 @@ function App() {
                     path="/"
                     element={
                         <>
+                            {apiData[0].NAME}
                             <div className="main-bg"></div>
                             <Card shoes={shoes} />
                             {isMoreShoes && (
@@ -103,22 +104,7 @@ function App() {
                                     더보기
                                 </button>
                             )}
-                            {/* <button
-                                onClick={() => {
-                                    const fetchData = async () => {
-                                        try {
-                                            const response = await axios.get("http://localhost:5000/api/user"); // 서버의 포트 번호에 맞게 변경
-                                            setData(response.data);
-                                        } catch (error) {
-                                            console.error("Error fetching data:", error);
-                                        }
-                                    };
 
-                                    console.log(fetchData());
-                                }}
-                            >
-                                DB연결
-                            </button> */}
                         </>
                     }
                 />
