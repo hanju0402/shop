@@ -6,6 +6,7 @@ import Card from "./component/Card";
 import axios from "axios";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail.js";
+import Cart from "./routes/Cart";
 
 function App() {
     let [shoes, setShoes] = useState(data);
@@ -21,22 +22,20 @@ function App() {
         }
     }, [urlCount]);
 
+    useEffect(() => {
+        // 초기 데이터를 가져와서 사용하거나, 필요한 경우 data 변수를 미리 선언해 두세요.
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:3002/api/user");
+                setApiData(response.data);
+                console.log(apiData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-
-   useEffect(() => {
-    // 초기 데이터를 가져와서 사용하거나, 필요한 경우 data 변수를 미리 선언해 두세요.
-    const fetchData = async () => {
-        try {
-            const response = await axios.get("http://localhost:3002/api/user");
-            setApiData(response.data);
-            console.log(apiData);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    fetchData();
-}, []);
+        fetchData();
+    }, []);
 
     return (
         <div className="App">
@@ -71,6 +70,13 @@ function App() {
                         >
                             About
                         </Nav.Link>
+                        <Nav.Link
+                            onClick={() => {
+                                navigate("/cart");
+                            }}
+                        >
+                            Cart
+                        </Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -80,7 +86,7 @@ function App() {
                     path="/"
                     element={
                         <>
-                            {apiData[0].NAME}
+                            {apiData.length > 0 && apiData[0].NAME}
                             <div className="main-bg"></div>
                             <Card shoes={shoes} />
                             {isMoreShoes && (
@@ -104,7 +110,6 @@ function App() {
                                     더보기
                                 </button>
                             )}
-
                         </>
                     }
                 />
@@ -118,6 +123,8 @@ function App() {
                     <Route path="two" element={<div>생일기념 쿠폰받기</div>}></Route>
                     <Route></Route>
                 </Route>
+
+                <Route path="/cart" element={<Cart/>} />
 
                 <Route path="*" element={<div>없는페이지</div>} />
             </Routes>
