@@ -1,6 +1,7 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCount, changeName } from "../store";
+import { changeCount } from "../store/cartSlice";
+
 
 export default function Cart() {
 
@@ -27,14 +28,14 @@ let dispatch = useDispatch();
                 </thead>
                 <tbody>
                     {
-                        [...cart].map((item, index) => (
-                            <tr key={item.id}>
+                        [...cart].map((prod, index) => (
+                            <tr key={prod.id}>
                             <td>{index+1}</td>
-                            <td>{item.name}</td>
-                            <td>{item.count}</td>
+                            <td>{prod.name}</td>
+                            <td>{prod.count}</td>
                             <td>
                                 <button onClick={() => {
-                                    dispatch(changeCount(index))
+                                    dispatch(changeCount(prod.id))
                                 }}>+</button>
                             </td>
                         </tr>

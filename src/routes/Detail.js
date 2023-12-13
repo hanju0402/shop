@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { addProduct } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 export default function Detail(props) {
     let [isShow, setIsShow] = useState(true);
     let [inputBox, setInputBox] = useState("");
     let [isShowWar, setIsShowWar] = useState(false);
     let [tapNo, setTapNo] = useState(0);
+    
+    let dispatch = useDispatch();
 
     useEffect(() => {
         let timer = setTimeout(() => {
@@ -56,14 +60,6 @@ export default function Detail(props) {
     return (
         <div className="container">
             {isShow && <div className="alert alert-warning">2초이내 구매시 할인</div>}
-            {count}{" "}
-            <button
-                onClick={() => {
-                    setCount(count + 1);
-                }}
-            >
-                버튼
-            </button>
             <div className="row">
                 <div className="col-md-6">
                     <img src={process.env.PUBLIC_URL + `/img/shoes${id}.jpg`} width="100%" />
@@ -74,7 +70,7 @@ export default function Detail(props) {
                     <h4 className="pt-5">{shoesInfo.title}</h4>
                     <p>{shoesInfo.content}</p>
                     <p>{shoesInfo.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={() => dispatch(addProduct({name: shoesInfo.title, count: 1}))}>주문하기</button>
                 </div>
             </div>
             <Nav variant="tabs" defaultActiveKey="link0">
