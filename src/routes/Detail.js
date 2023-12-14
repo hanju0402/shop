@@ -10,8 +10,31 @@ export default function Detail(props) {
     let [inputBox, setInputBox] = useState("");
     let [isShowWar, setIsShowWar] = useState(false);
     let [tapNo, setTapNo] = useState(0);
-    
+    let { id } = useParams();
+
     let dispatch = useDispatch();
+
+    useEffect(() => {
+
+        // localStorage에서 'watched' 키의 값을 가져오고, 없으면 빈 배열을 반환
+        let setArray = JSON.parse(localStorage.getItem("watched")) || [];
+
+        console.log(setArray);
+        console.log(id);
+        let arrayObject = Array.from(setArray);
+        if (!arrayObject.find((arrayId) => arrayId === id)) {
+            console.log("들어온다고?");
+            // setArray 배열에 id를 추가
+            setArray.push(Number(id));
+        }
+
+        // 배열을 다시 문자열로 변환
+        let jsonArray = JSON.stringify(setArray);
+
+
+        // 'watched' 키에 새로운 값을 저장
+        localStorage.setItem("watched", jsonArray);
+    }, []);
 
     useEffect(() => {
         let timer = setTimeout(() => {
@@ -38,7 +61,6 @@ export default function Detail(props) {
 
     let [count, setCount] = useState(0);
 
-    let { id } = useParams();
     let shoesInfo = props.shoes.find((x) => x.id === Number(id));
 
     function chngeEvent(event) {
@@ -70,31 +92,51 @@ export default function Detail(props) {
                     <h4 className="pt-5">{shoesInfo.title}</h4>
                     <p>{shoesInfo.content}</p>
                     <p>{shoesInfo.price}</p>
-                    <button className="btn btn-danger" onClick={() => dispatch(addProduct({name: shoesInfo.title, count: 1}))}>주문하기</button>
+                    <button
+                        className="btn btn-danger"
+                        onClick={() => dispatch(addProduct({ name: shoesInfo.title, count: 1 }))}
+                    >
+                        주문하기
+                    </button>
                 </div>
             </div>
             <Nav variant="tabs" defaultActiveKey="link0">
                 <Nav.Item>
-                    <Nav.Link onClick={() => {
-                        setTapNo(0);
-                    }} eventKey="link0">버튼0</Nav.Link>
+                    <Nav.Link
+                        onClick={() => {
+                            setTapNo(0);
+                        }}
+                        eventKey="link0"
+                    >
+                        버튼0
+                    </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link onClick={() => {
-                        setTapNo(1);
-                    }} eventKey="link1">버튼1</Nav.Link>
+                    <Nav.Link
+                        onClick={() => {
+                            setTapNo(1);
+                        }}
+                        eventKey="link1"
+                    >
+                        버튼1
+                    </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link onClick={() => {
-                        setTapNo(2);
-                    }} eventKey="link2">버튼2</Nav.Link>
+                    <Nav.Link
+                        onClick={() => {
+                            setTapNo(2);
+                        }}
+                        eventKey="link2"
+                    >
+                        버튼2
+                    </Nav.Link>
                 </Nav.Item>
             </Nav>
-            <TabCmponent index={tapNo}/>
+            <TabCmponent index={tapNo} />
         </div>
     );
 }
 
-function TabCmponent({index}) {
-    return([<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][index])
+function TabCmponent({ index }) {
+    return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][index];
 }

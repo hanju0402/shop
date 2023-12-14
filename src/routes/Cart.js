@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCount } from "../store/cartSlice";
+import { changeCount, removeProduct } from "../store/cartSlice";
 
 
 export default function Cart() {
@@ -36,7 +36,10 @@ let dispatch = useDispatch();
                             <td>
                                 <button onClick={() => {
                                     dispatch(changeCount(prod.id))
-                                }}>+</button>
+                                }}>+</button>{" "}
+                                <button onClick={() => {
+                                    dispatch(removeProduct(prod.id))
+                                }}>-</button>
                             </td>
                         </tr>
                         ))

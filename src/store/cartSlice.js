@@ -47,10 +47,23 @@ let cart = createSlice({
 
 
             return [...state, newProd];
+        },
+
+        removeProduct(state, action) {
+            const prodId = action.payload;
+            const prodIndex = state.findIndex((prod) => prod.id === prodId);
+
+            if (state[prodIndex].count <= 1) {
+                state.splice(prodIndex, 1);
+            } else {
+                state[prodIndex].count--
+            }
+
         }
+
     }
 });
 
-export let { changeCount, addProduct } = cart.actions;
+export let { changeCount, addProduct, removeProduct } = cart.actions;
 
 export default cart;

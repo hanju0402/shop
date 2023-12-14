@@ -16,6 +16,10 @@ function App() {
     let [apiData, setApiData] = useState([]); // 상태 변수명을 변경
 
     useEffect(() => {
+        localStorage.setItem("watched", JSON.stringify([]));
+    }, []);
+
+    useEffect(() => {
         if (Number(urlCount) > 3) {
             setIsMoreShoes(false);
             console.log(urlCount);
@@ -117,7 +121,7 @@ function App() {
                     <Route></Route>
                 </Route>
 
-                <Route path="/cart" element={<Cart/>} />
+                <Route path="/cart" element={<Cart />} />
 
                 <Route path="*" element={<div>없는페이지</div>} />
             </Routes>
