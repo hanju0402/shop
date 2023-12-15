@@ -1,13 +1,27 @@
+.flex-container {
+  display: flex;
+}
+
 .main-bg {
+  flex: 8; /* 나머지 공간을 차지하도록 함 */
   height: 300px;
   background-image: url(./img/bg.png);
   background-size: cover;
   background-position: center;
 }
 
+.recent-watched {
+  flex: 2; /* 나머지 공간을 차지하도록 함 */
+  background-color: white;
+  min-height: calc(50vh - 10px);
+	padding-top: 60px;
+}
+
+
 .App {
   text-align: center;
 }
+
 
 .App-logo {
   height: 40vmin;

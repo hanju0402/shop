@@ -15,25 +15,31 @@ export default function Detail(props) {
     let dispatch = useDispatch();
 
     useEffect(() => {
-
+        /* 방법 1
         // localStorage에서 'watched' 키의 값을 가져오고, 없으면 빈 배열을 반환
         let setArray = JSON.parse(localStorage.getItem("watched")) || [];
 
-        console.log(setArray);
-        console.log(id);
-        let arrayObject = Array.from(setArray);
-        if (!arrayObject.find((arrayId) => arrayId === id)) {
+        
+        if (!setArray.find((arrayId) => arrayId == id)) {
             console.log("들어온다고?");
             // setArray 배열에 id를 추가
             setArray.push(Number(id));
         }
-
+ 
         // 배열을 다시 문자열로 변환
         let jsonArray = JSON.stringify(setArray);
 
 
         // 'watched' 키에 새로운 값을 저장
         localStorage.setItem("watched", jsonArray);
+        */
+
+        let watchArray = localStorage.getItem('watched');
+        watchArray = JSON.parse(watchArray);
+        watchArray.unshift(Number(id));
+        watchArray = new Set(watchArray);
+        watchArray = Array.from(watchArray);
+        localStorage.setItem('watched', JSON.stringify(watchArray));
     }, []);
 
     useEffect(() => {

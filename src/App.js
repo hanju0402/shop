@@ -7,6 +7,8 @@ import axios from "axios";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail.js";
 import Cart from "./routes/Cart";
+import RecentList from "./component/RecentList";
+import MainBoard from "./component/MainBoard";
 
 function App() {
     let [shoes, setShoes] = useState(data);
@@ -16,7 +18,11 @@ function App() {
     let [apiData, setApiData] = useState([]); // 상태 변수명을 변경
 
     useEffect(() => {
-        localStorage.setItem("watched", JSON.stringify([]));
+        let watchValue = localStorage.getItem("watched");
+
+        if (!watchValue) {
+            localStorage.setItem("watched", JSON.stringify([]));
+        }
     }, []);
 
     useEffect(() => {
@@ -50,7 +56,7 @@ function App() {
                             navigate("/");
                         }}
                     >
-                        혜진.SHOP
+                        한주.SHOP
                     </Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link
@@ -84,7 +90,10 @@ function App() {
                     element={
                         <>
                             {apiData.length > 0 && apiData[0].NAME}
-                            <div className="main-bg"></div>
+                            <button onClick={()=> {
+                                localStorage.removeItem('watched');
+                            }}>스토리지 초기화</button>
+                            <MainBoard/>
                             <Card shoes={shoes} />
                             {isMoreShoes && (
                                 <button
